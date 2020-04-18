@@ -6,39 +6,6 @@
 
 googlefonts-inliner is a PostCSS plugin that allows to download all Google Fonts referenced by a stylesheet in CSS or SASS format, and serve them locally. This process is particularly useful when building UIs for offline or high-availability systems, like vehicle interfaces, HMIs, that cannot wait for external servers.
 
-## Installation
-
-```
-yarn add googlefonts-inliner
-```
-
-or
-
-```
-npm i googlefonts-inliner
-```
-
-## Usage
-
-Create a file named `postcss.config.js` with the following content:
-
-```js
-module.exports = {
-  plugins: [
-    require('googlefonts-inliner')(),
-  ],
-};
-```
-
-Run PostCSS against the target stylesheet. There are various ways to run PostCSS, the most simple consists in using `postcss-cli`:
-
-```
-yarn add postcss-cli
-postcss style.css --replace
-```
-
-## Example
-
 Let's suppose we have a stylesheet `style.css` with the following content:
 
 ```css
@@ -80,6 +47,49 @@ While the following files are are created:
 ```
 googlefonts/7Aulp_0qiz-aVz7u3PJLcUMYOFlOkEk40eifxHiDnzM.woff2
 googlefonts/7Aulp_0qiz-aVz7u3PJLcUMYOFlOkEk50eifxHiDnzM.woff2
+```
+
+## Installation
+
+```
+yarn add googlefonts-inliner
+```
+
+or
+
+```
+npm i googlefonts-inliner
+```
+
+## Usage
+
+Create a file named `postcss.config.js` with the following content:
+
+```js
+module.exports = {
+  plugins: [
+    require('googlefonts-inliner')(),
+  ],
+};
+```
+
+Run PostCSS against the target stylesheet. There are various ways to run PostCSS, the most simple consists in using `postcss-cli`:
+
+```
+yarn add postcss-cli
+postcss style.css --replace
+```
+
+## Options
+
+```js
+require('googlefonts-inliner')({
+  // the folder in which fonts will be saved
+  folder: 'googlefonts',
+  // the user agent used to download the fonts
+  userAgent: 'Mozilla/5.0 (iPad; CPU OS 10_3_3 like Mac OS X)'
+    + ' AppleWebKit/603.1.30 (KHTML, like Gecko) CriOS/63.0.3239.73 Mobile/14G60 Safari/602.1',
+})
 ```
 
 ## Links
