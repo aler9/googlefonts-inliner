@@ -22,7 +22,7 @@ npm i googlefonts-inliner
 
 Create a file named `postcss.config.js` with the following content:
 
-```
+```js
 module.exports = {
   plugins: [
     require('googlefonts-inliner')(),
@@ -34,7 +34,7 @@ Run PostCSS against the target stylesheet. There are various ways to run PostCSS
 
 ```
 yarn add postcss-cli
-postcss style.css
+postcss style.css --replace
 ```
 
 ## Example
