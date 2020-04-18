@@ -58,3 +58,8 @@ googlefonts/font0.css
 googlefonts/UGY3eqadagewfiYGEwefiwehu.woff2
 googlefonts/3rqeDQUIYhwegwefewfwefwef.woff2
 ```
+
+## Links
+
+Similar software
+* https://github.com/amio/embedded-google-fonts
