@@ -21,12 +21,12 @@ body {
 }
 ```
 
-and in the `googlefonts/` folder the following files are are created:
+while the following files are are created:
 
 ```
-font0.css
-UGY3eqadagewfiYGEwefiwehu.woff2
-3rqeDQUIYhwegwefewfwefwef.woff2
+googlefonts/font0.css
+googlefonts/UGY3eqadagewfiYGEwefiwehu.woff2
+googlefonts/3rqeDQUIYhwegwefewfwefwef.woff2
 ```
 
 ## Installation
