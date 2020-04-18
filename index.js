@@ -36,7 +36,8 @@ const httpGetAsync = async (url, options) => new Promise((done, reject) => {
 module.exports = postcss.plugin('googlefonts-inliner', (inOptions) => {
   let options = inOptions || {};
   options = {
-    folder: 'googlefonts',
+    localPath: './googlefonts',
+    webPath: 'googlefonts',
     userAgent: 'Mozilla/5.0 (iPad; CPU OS 10_3_3 like Mac OS X)'
       + ' AppleWebKit/603.1.30 (KHTML, like Gecko) CriOS/63.0.3239.73 Mobile/14G60 Safari/602.1',
     ...options,
@@ -44,7 +45,7 @@ module.exports = postcss.plugin('googlefonts-inliner', (inOptions) => {
 
   return async (root) => {
     // create output folder
-    await mkdir(options.folder);
+    await mkdir(options.localPath);
 
     // gather @import rules
     const rules = [];
@@ -78,10 +79,10 @@ module.exports = postcss.plugin('googlefonts-inliner', (inOptions) => {
           const font = await httpGetAsync(fmatches[1], {});
 
           // save font
-          await writeFile(join(options.folder, fmatches[2]), font);
+          await writeFile(join(options.localPath, fmatches[2]), font);
 
           // replace font url with local url
-          return `url(${options.folder}/${fmatches[2]})`;
+          return `url(${options.webPath}/${fmatches[2]})`;
         });
 
         // replace value with modified value

@@ -89,7 +89,9 @@ postcss style.css --replace
 ```js
 require('googlefonts-inliner')({
   // the folder in which fonts will be saved
-  folder: 'googlefonts',
+  localPath: './googlefonts',
+  // the path of localPath as served by the web server
+  webPath: 'googlefonts',
   // the user agent used to download the fonts
   userAgent: 'Mozilla/5.0 (iPad; CPU OS 10_3_3 like Mac OS X)'
     + ' AppleWebKit/603.1.30 (KHTML, like Gecko) CriOS/63.0.3239.73 Mobile/14G60 Safari/602.1',
