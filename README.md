@@ -38,7 +38,7 @@ body {
 
 Run the tool:
 ```
-googlefonts-inliner style.css
+node_modules/.bin/googlefonts-inliner style.css
 ```
 
 The stylesheet becomes:
