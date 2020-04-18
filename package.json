@@ -2,6 +2,11 @@
   "name": "googlefonts-inliner",
   "version": "0.1.0",
   "license": "MIT",
+  "keywords": [
+    "postcss",
+    "css",
+    "postcss-plugin"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/aler9/googlefonts-inliner"
@@ -17,13 +22,12 @@
     "jest": "^25.3.0",
     "mock-fs": "^4.11.0"
   },
-  "bin": "./cli.js",
   "main": "index.js",
   "scripts": {
     "pretest": "eslint .",
     "test": "jest"
   },
   "dependencies": {
-    "yargs": "^15.3.1"
+    "postcss": "^7.0.27"
   }
 }

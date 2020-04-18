@@ -14,5 +14,7 @@ module.exports = {
   },
   rules: {
     'no-console': [ 'off' ],
+    'no-restricted-syntax': [ 'off' ],
+    'no-await-in-loop': [ 'off' ],
   }
 };

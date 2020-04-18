@@ -1,11 +1,11 @@
 
-const { resolve, dirname, join } = require('path');
+const postcss = require('postcss');
 const https = require('https');
 const { promisify } = require('util');
 const fs = require('fs');
+const { join } = require('path');
 
 const mkdir = promisify(fs.mkdir);
-const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
 
@@ -18,66 +18,81 @@ const replaceAsync = async (str, regex, cb) => {
 
 const httpGetAsync = async (url, options) => new Promise((done, reject) => {
   const ur = new URL(url);
-
   const req = https.request({
     hostname: ur.host,
     path: ur.pathname + ur.search,
     ...options,
   }, (res) => {
     let cnt = Buffer.alloc(0);
-
     res.on('data', (data) => {
       cnt = Buffer.concat([cnt, data]);
     });
-
     res.on('end', () => done(cnt));
   });
-
   req.on('error', (err) => reject(err));
-
   req.end();
 });
 
-module.exports = async (inOptions) => {
-  const options = {
-    file: null,
+module.exports = postcss.plugin('googlefonts-inliner', (inOptions) => {
+  let options = inOptions || {};
+  options = {
+    folder: 'googlefonts',
     userAgent: 'Mozilla/5.0 (iPad; CPU OS 10_3_3 like Mac OS X)'
       + ' AppleWebKit/603.1.30 (KHTML, like Gecko) CriOS/63.0.3239.73 Mobile/14G60 Safari/602.1',
-    ...inOptions,
+    ...options,
   };
 
-  const folderPath = dirname(resolve(options.file));
+  return async (root) => {
+    // create output folder
+    await mkdir(options.folder);
 
-  // read stylesheet
-  let cnt = await readFile(options.file, 'utf-8');
+    // gather @import rules
+    const rules = [];
+    root.walkAtRules('import', (rule) => rules.push(rule));
 
-  // create fonts folder
-  await mkdir(join(folderPath, 'googlefonts'));
+    await Promise.all(rules.map(async (rule) => {
+      // match google fonts
+      const matches = rule.params.match(/^url\(["'](https:\/\/fonts\.googleapis\.com.+?)["']\)$/);
+      if (!matches) {
+        return;
+      }
 
-  // foreach font url
-  cnt = await replaceAsync(cnt, /@import url\(["'](https:\/\/fonts\.googleapis\.com.+?)["']\);/g, async (ma) => {
-    // download font css
-    let fontCss = await httpGetAsync(ma[1], {
-      headers: {
-        'User-Agent': options.userAgent,
-      },
-    });
-    fontCss = fontCss.toString();
+      // download and parse font css
+      let fontRoot = await httpGetAsync(matches[1], {
+        headers: {
+          'User-Agent': options.userAgent,
+        },
+      });
+      fontRoot = postcss.parse(fontRoot.toString());
 
-    // foreach font
-    fontCss = await replaceAsync(fontCss, /url\((https:\/\/.+\/(.+?))\)/g, async (mb) => {
-      // download font
-      const font = await httpGetAsync(mb[1], {});
+      // gather @font-face/src declarations
+      const fdecls = [];
+      fontRoot.walkAtRules('font-face',
+        (frule) => frule.walkDecls('src',
+          (fdecl) => fdecls.push(fdecl)));
 
-      // save font
-      await writeFile(join(folderPath, 'googlefonts', mb[2]), font);
+      await Promise.all(fdecls.map(async (fdecl) => {
+        // for each font url
+        const value = await replaceAsync(fdecl.value, /url\((https:\/\/.+\/(.+?))\)/g, async (fmatches) => {
+          // download font
+          const font = await httpGetAsync(fmatches[1], {});
 
-      return `url(googlefonts/${mb[2]})`;
-    });
+          // save font
+          await writeFile(join(options.folder, fmatches[2]), font);
 
-    // replace font url with font css
-    return fontCss.replace(/\n$/, '');
-  });
+          // replace font url with local url
+          return `url(${options.folder}/${fmatches[2]})`;
+        });
 
-  await writeFile(options.file, cnt);
-};
+        // replace value with modified value
+        fdecl.replaceWith({
+          prop: 'src',
+          value,
+        });
+      }));
+
+      // replace @import with font css
+      rule.replaceWith(fontRoot);
+    }));
+  };
+});
