@@ -14,3 +14,4 @@ deploy:
   on:
     repo: aler9/googlefonts-inliner
     tags: true
+    node: 13
