@@ -49,7 +49,7 @@ googlefonts/7Aulp_0qiz-aVz7u3PJLcUMYOFlOkEk40eifxHiDnzM.woff2
 googlefonts/7Aulp_0qiz-aVz7u3PJLcUMYOFlOkEk50eifxHiDnzM.woff2
 ```
 
-Please note that while it is technically possible to embed font files into the stylesheet too, this operation is not performed since inlined fonts [make a web page less performant](https://www.zachleat.com/web/web-font-data-uris/).
+Please note that while it is technically possible to embed font files into the stylesheet, this is avoided since inlined fonts [make a web page less performant](https://www.zachleat.com/web/web-font-data-uris/).
 
 ## Installation
 
@@ -81,7 +81,7 @@ module.exports = {
 
 Run PostCSS against the target stylesheet:
 ```
-postcss style.css --replace
+node_modules/.bin/postcss style.css --replace
 ```
 
 ## Options
