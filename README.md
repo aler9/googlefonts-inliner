@@ -6,7 +6,7 @@
 
 googlefonts-inliner is a PostCSS plugin that allows to download all Google Fonts referenced by a stylesheet in CSS or SASS format, and serve them locally. This process is particularly useful when building UIs for offline or high-availability systems, like vehicle interfaces, HMIs, that cannot wait for external servers.
 
-Let's suppose we have a stylesheet `style.css` with the following content:
+Let's suppose we have a stylesheet with the following content:
 
 ```css
 @import url('https://fonts.googleapis.com/css?family=Muli:200,300,400,700&display=swap');
@@ -49,7 +49,7 @@ googlefonts/7Aulp_0qiz-aVz7u3PJLcUMYOFlOkEk40eifxHiDnzM.woff2
 googlefonts/7Aulp_0qiz-aVz7u3PJLcUMYOFlOkEk50eifxHiDnzM.woff2
 ```
 
-Please note that while it is technically possible to embed the woff files into the stylesheet too, this operation is not performed since inlined fonts [make a web page less performant](https://www.zachleat.com/web/web-font-data-uris/).
+Please note that while it is technically possible to embed font files into the stylesheet too, this operation is not performed since inlined fonts [make a web page less performant](https://www.zachleat.com/web/web-font-data-uris/).
 
 ## Installation
 
@@ -65,8 +65,12 @@ npm i googlefonts-inliner
 
 ## Usage
 
-Create a file named `postcss.config.js` with the following content:
+There are multiple ways to run PostCSS, the most simple consists in using `postcss-cli`, that can installed with:
+```
+yarn add postcss-cli
+```
 
+Create a file named `postcss.config.js` with the following content:
 ```js
 module.exports = {
   plugins: [
@@ -75,10 +79,8 @@ module.exports = {
 };
 ```
 
-Run PostCSS against the target stylesheet. There are various ways to run PostCSS, the most simple consists in using `postcss-cli`:
-
+Run PostCSS against the target stylesheet:
 ```
-yarn add postcss-cli
 postcss style.css --replace
 ```
 
