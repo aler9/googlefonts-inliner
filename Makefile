@@ -22,7 +22,7 @@ test:
 	'cd /s && make test-nodocker'
 
 test-nodocker:
-	npm test
+	yarn test
 
 run:
 	echo "$$DOCKERFILE" | docker build . -f - -t temp
