@@ -47,7 +47,6 @@ module.exports = async (inOptions) => {
   };
 
   const folderPath = dirname(resolve(options.file));
-  const isSass = options.file.endsWith('.scss');
 
   // read stylesheet
   let cnt = await readFile(options.file, 'utf-8');
@@ -56,11 +55,7 @@ module.exports = async (inOptions) => {
   await mkdir(join(folderPath, 'googlefonts'));
 
   // foreach font url
-  let counter = 0;
   cnt = await replaceAsync(cnt, /@import url\(["'](https:\/\/fonts\.googleapis\.com.+?)["']\);/g, async (ma) => {
-    const id = counter;
-    counter += 1;
-
     // download font css
     let fontCss = await httpGetAsync(ma[1], {
       headers: {
@@ -77,14 +72,11 @@ module.exports = async (inOptions) => {
       // save font
       await writeFile(join(folderPath, 'googlefonts', mb[2]), font);
 
-      return (isSass) ? `url(googlefonts/${mb[2]})` : `url(${mb[2]})`;
+      return `url(googlefonts/${mb[2]})`;
     });
 
-    // save font css
-    await writeFile(join(folderPath, 'googlefonts', (isSass) ? `font${id}.scss` : `font${id}.css`), fontCss);
-
-    // replace font
-    return (isSass) ? `@import "googlefonts/font${id}.scss";` : `@import url(googlefonts/font${id}.css);`;
+    // replace font url with font css
+    return fontCss.replace(/\n$/, '');
   });
 
   await writeFile(options.file, cnt);
