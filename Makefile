@@ -1,6 +1,16 @@
 
 BASE_IMAGE = node:12-alpine
 
+help:
+	@echo "usage: make [action]"
+	@echo ""
+	@echo "available actions:"
+	@echo ""
+	@echo "  test           run tests"
+	@echo "  run            run app"
+	@echo "  travis-setup   setup travis CI"
+	@echo ""
+
 define DOCKERFILE
 FROM $(BASE_IMAGE)
 
@@ -31,3 +41,15 @@ run:
 
 run-nodocker:
 	node cli.js $(ARGS)
+
+define DOCKERFILE_TRAVIS
+FROM ruby:alpine
+RUN apk add --no-cache build-base git
+RUN gem install travis
+endef
+export DOCKERFILE_TRAVIS
+
+travis-setup:
+	echo "$$DOCKERFILE_TRAVIS" | docker build - -t temp
+	docker run --rm -it -v $(PWD):/s temp sh -c \
+	"cd /s && travis setup npm --force"
