@@ -79,6 +79,8 @@ module.exports = {
 };
 ```
 
+If the `postcss-import` plugin is also in use, put `googlefonts-inliner` after it, not before.
+
 Run PostCSS against the target stylesheet:
 ```
 node_modules/.bin/postcss style.css -o style_edited.css
