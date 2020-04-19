@@ -11,10 +11,5 @@ module.exports = {
   },
   parserOptions: {
     ecmaVersion: 2018
-  },
-  rules: {
-    'no-console': [ 'off' ],
-    'no-restricted-syntax': [ 'off' ],
-    'no-await-in-loop': [ 'off' ],
   }
 };
