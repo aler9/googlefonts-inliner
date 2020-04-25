@@ -45,7 +45,7 @@ module.exports = postcss.plugin('googlefonts-inliner', (inOptions) => {
 
   return async (root) => {
     // create output folder
-    await mkdir(options.localPath);
+    await mkdir(options.localPath, { recursive: true });
 
     // gather @import rules
     const rules = [];
