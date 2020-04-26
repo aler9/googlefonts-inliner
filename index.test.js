@@ -3,7 +3,9 @@ const mock = require('mock-fs');
 const postcss = require('postcss');
 const { promisify } = require('util');
 const fs = require('fs');
+const childProcess = require('child_process');
 
+const exec = promisify(childProcess.exec);
 const readFile = promisify(fs.readFile);
 
 const plugin = require('.');
@@ -11,6 +13,12 @@ const plugin = require('.');
 
 afterEach(async () => {
   mock.restore();
+});
+
+test('git version match package version', async () => {
+  const nodeTag = process.env.npm_package_version;
+  const gitTag = (await exec('git describe --tags --abbrev=0')).stdout.slice(1, -1);
+  expect(gitTag).toEqual(nodeTag);
 });
 
 test('main', async () => {

@@ -15,7 +15,8 @@ define DOCKERFILE
 FROM $(BASE_IMAGE)
 
 RUN apk add --no-cache \
-	make
+	make \
+	git
 
 WORKDIR /s
 
