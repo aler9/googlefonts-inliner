@@ -83,7 +83,7 @@ If the `postcss-import` plugin is also in use, put `googlefonts-inliner` after i
 
 Run PostCSS against the target stylesheet:
 ```
-node_modules/.bin/postcss style.css -o style_edited.css
+npx postcss style.css -o style_edited.css
 ```
 
 ## Options
