@@ -1,6 +1,7 @@
 {
   "name": "googlefonts-inliner",
   "version": "0.2.2",
+  "description": "PostCSS plugin to download all Google Fonts referenced by a stylesheet and serve them locally",
   "license": "MIT",
   "keywords": [
     "postcss",
