@@ -4,6 +4,7 @@ node_js:
 - 10
 - 12
 - 13
+- 14
 
 deploy:
   provider: npm
@@ -13,4 +14,4 @@ deploy:
   on:
     repo: aler9/googlefonts-inliner
     tags: true
-    node_js: 13
+    node_js: 14
