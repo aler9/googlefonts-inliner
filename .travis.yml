@@ -9,7 +9,7 @@ deploy:
   provider: npm
   email: aler9.dev@gmail.com
   api_key:
-    secure: TvWK1KcAL6BjVi1IkNPUWA/UZKdCXyjsbBz6jX9Yf/YxR+mhnbMLpLoU5g0sQnUczllWpEV25FeCL+5TvIy52NTnPCLtU8IVnJjwmctXfEve9hvzqyGTukQfNirn8WJ6oKWVkKXlhJGBF3pO/kNSG+36XfJDViuXvUb7Zo239YtC8mK1idm2izdx68S0kYEx0XWnDzugRhtHK7tRhm02vsVuiVR73en2tPJqAWiKAIpsly1o2dF4ZA9bNoVRVr8t8yPOxsGWwZWzkTkkEiggLoZ08ljdDk2d0wNWUc09FWYyAWkco4jdj7TU+yN2BQnF+6qYXYaAGFo2CwVeOJq+O8OCoKKJohzUDHggRayFihtnyhSKMM6viZHYRXC6d3gfr0k8kHwlM6wQOOe49e9OMJM1op3L+J2QKWSQvbav8SIpP0ruc+Uz9Eq7SL4iFS4WjNhRcBQcGduDF+LXj8mwJKcWqLcoJYVPouixvr78hVcSKIXZviGLRhZ0jJAPU6/FCNhzL1ZzqUNy6bP6Szqzd3d1sUynfuO3YY4XveUm+28X9SBRZ5AsWj7EqbsPEiHoe6IrOlx9DGOSrz6PvcXROdhGTKixsrjH8j2d5icLhgDUuh1BCQ+ZcvR3JxDvAf3XXAOgJNuHMuIp2pphJRX/0I4GoqBTTVJrV0yTdjIRdAQ=
+    secure: $NPM_API_KEY
   on:
     repo: aler9/googlefonts-inliner
     tags: true
