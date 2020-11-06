@@ -13,7 +13,7 @@
     "url": "https://github.com/aler9/googlefonts-inliner"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=12.0.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
