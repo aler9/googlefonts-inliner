@@ -7,8 +7,7 @@ node_js:
 deploy:
   provider: npm
   email: aler9.dev@gmail.com
-  api_key:
-    secure: $NPM_API_KEY
+  api_key: $NPM_API_KEY
   on:
     repo: aler9/googlefonts-inliner
     tags: true
