@@ -13,12 +13,12 @@ const replaceAsync = async (str, regex, cb) => {
   return str.replace(regex, () => data.shift());
 };
 
-const httpGetAsync = async (url, options) => new Promise((done, reject) => {
+const httpGetAsync = async (url, opts) => new Promise((done, reject) => {
   const ur = new URL(url);
   const req = https.request({
     hostname: ur.host,
     path: ur.pathname + ur.search,
-    ...options,
+    ...opts,
   }, (res) => {
     let cnt = Buffer.alloc(0);
     res.on('data', (data) => {
@@ -45,12 +45,14 @@ const work = async (opts, root, parse) => {
       return;
     }
 
-    // download and parse font css
-    let fontRoot = await httpGetAsync(matches[1], {
+    const httpOpts = {
       headers: {
         'User-Agent': opts.userAgent,
       },
-    });
+    };
+
+    // download and parse font css
+    let fontRoot = await httpGetAsync(matches[1], httpOpts);
     fontRoot = parse(fontRoot.toString());
 
     // gather @font-face/src declarations
@@ -59,11 +61,12 @@ const work = async (opts, root, parse) => {
       (frule) => frule.walkDecls('src',
         (fdecl) => fdecls.push(fdecl)));
 
+    // for each @font-face/src
     await Promise.all(fdecls.map(async (fdecl) => {
-      // for each font url
-      const value = await replaceAsync(fdecl.value, /url\((https:\/\/.+\/(.+?))\)/g, async (fmatches) => {
+      // replace font url with local url
+      let value = await replaceAsync(fdecl.value, /url\((https:\/\/.+\/(.+?))\)/g, async (fmatches) => {
         // download font
-        const font = await httpGetAsync(fmatches[1], {});
+        const font = await httpGetAsync(fmatches[1], httpOpts);
 
         // remove query
         let fname = fmatches[2];
@@ -75,11 +78,13 @@ const work = async (opts, root, parse) => {
         // save font
         await writeFile(join(opts.localPath, fname), font);
 
-        // replace font url with local url
         return `url(${opts.webPath}/${fname})`;
       });
 
-      // replace value with modified value
+      // remove local fonts
+      value = value.replace(/local\(.*?\)(, )?/g, '');
+
+      // replace src
       fdecl.replaceWith({
         prop: 'src',
         value,
