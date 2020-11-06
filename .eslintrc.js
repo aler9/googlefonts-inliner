@@ -7,9 +7,9 @@ module.exports = {
   extends: ['eslint:recommended', 'airbnb-base', 'plugin:jest/recommended'],
   globals: {
     Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
+    SharedArrayBuffer: 'readonly',
   },
   parserOptions: {
-    ecmaVersion: 2018
-  }
+    ecmaVersion: 2018,
+  },
 };

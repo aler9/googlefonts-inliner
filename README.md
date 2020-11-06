@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.com/aler9/googlefonts-inliner.svg?branch=master)](https://travis-ci.com/aler9/googlefonts-inliner)
 [![npm](https://img.shields.io/badge/npm-googlefonts--inliner-blue)](https://www.npmjs.com/package/googlefonts-inliner)
 
-googlefonts-inliner is a PostCSS plugin that allows to download all Google Fonts referenced by a stylesheet in CSS or SASS format, and serve them locally. This process eliminates the need for external resources and is particularly useful when building UIs for offline or high-availability systems, like vehicle interfaces or HMIs.
+googlefonts-inliner is a PostCSS plugin that downloads all Google Fonts imported by a stylesheet in CSS or SASS format, and makes them available as local files. This process eliminates the need of fetching external resources during page loads, and is particularly useful when building UIs for offline or high-availability systems, like vehicle interfaces or HMIs.
 
 Given a stylesheet with the following content:
 
@@ -54,13 +54,7 @@ Please note that while it is technically possible to embed font files directly i
 ## Installation
 
 ```
-yarn add googlefonts-inliner
-```
-
-or
-
-```
-npm i googlefonts-inliner
+yarn add googlefonts-inliner postcss
 ```
 
 ## Usage

@@ -1,7 +1,7 @@
 {
   "name": "googlefonts-inliner",
   "version": "0.2.2",
-  "description": "PostCSS plugin to download all Google Fonts referenced by a stylesheet and serve them locally",
+  "description": "PostCSS plugin to download all Google Fonts imported by a stylesheet and serve them locally",
   "license": "MIT",
   "keywords": [
     "postcss",
@@ -12,23 +12,24 @@
     "type": "git",
     "url": "https://github.com/aler9/googlefonts-inliner"
   },
-  "engines": {
-    "node": ">=12.0.0"
-  },
-  "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jest": "^23.8.2",
-    "jest": "^25.3.0",
-    "mock-fs": "^4.11.0"
-  },
   "main": "index.js",
   "scripts": {
     "pretest": "eslint .",
     "test": "jest"
   },
-  "dependencies": {
-    "postcss": "^7.0.27"
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.0",
+    "jest": "^26.6.3",
+    "mock-fs": "^4.13.0",
+    "postcss": "^8.1.6"
+  },
+  "peerDependencies": {
+    "postcss": "^8.1.6"
   }
 }

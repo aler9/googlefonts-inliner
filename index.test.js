@@ -1,4 +1,3 @@
-
 const mock = require('mock-fs');
 const postcss = require('postcss');
 const { promisify } = require('util');
@@ -9,7 +8,6 @@ const exec = promisify(childProcess.exec);
 const readFile = promisify(fs.readFile);
 
 const plugin = require('.');
-
 
 afterEach(async () => {
   mock.restore();
@@ -150,7 +148,7 @@ body {
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('Cutive Mono Regular'), local('CutiveMono-Regular'), url(googlefonts/m8JWjfRfY7WVjVi2E-K9H6RMTm6o39ucNvc.woff2) format('woff2');
+  src: url(googlefonts/m8JWjfRfY7WVjVi2E-K9H6RMTm6o39ucNvc.woff2) format('woff2');
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -159,7 +157,7 @@ body {
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('Cutive Mono Regular'), local('CutiveMono-Regular'), url(googlefonts/m8JWjfRfY7WVjVi2E-K9H6RCTm6o39uc.woff2) format('woff2');
+  src: url(googlefonts/m8JWjfRfY7WVjVi2E-K9H6RCTm6o39uc.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @import url(https://example.com/othersheet.css);
