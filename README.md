@@ -1,7 +1,7 @@
 
 # googlefonts-inliner
 
-[![Test](https://github.com/aler9/googlefonts-inliner/workflows/test/badge.svg)](https://github.com/aler9/googlefonts-inliner/actions)
+[![Test](https://github.com/aler9/googlefonts-inliner/workflows/test/badge.svg)](https://github.com/aler9/googlefonts-inliner/actions?query=workflow:test)
 [![npm](https://img.shields.io/badge/npm-googlefonts--inliner-blue.svg)](https://www.npmjs.com/package/googlefonts-inliner)
 
 googlefonts-inliner is a PostCSS plugin that downloads all Google Fonts imported by a stylesheet in CSS or SASS format, and makes them available as local files. This process eliminates the need of fetching external resources during page loads, and is particularly useful when building UIs for offline or high-availability systems, like vehicle interfaces or HMIs.
