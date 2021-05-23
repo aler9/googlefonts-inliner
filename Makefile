@@ -29,7 +29,7 @@ export DOCKERFILE
 test:
 	echo "$$DOCKERFILE" | docker build . -f - -t temp
 	docker run --rm -it temp sh -c \
-	'cd /s && make test-nodocker'
+	'make test-nodocker'
 
 test-nodocker:
 	yarn test
@@ -37,7 +37,7 @@ test-nodocker:
 run:
 	echo "$$DOCKERFILE" | docker build . -f - -t temp
 	docker run --rm -it -v $(PWD):/orig temp sh -c \
-	'cd /s && make run-nodocker ARGS="$(ARGS)"'
+	'make run-nodocker ARGS="$(ARGS)"'
 
 run-nodocker:
 	node cli.js $(ARGS)
