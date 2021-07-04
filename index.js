@@ -31,6 +31,12 @@ const httpGetAsync = async (url, opts) => new Promise((done, reject) => {
 });
 
 const work = async (opts, root, parse) => {
+  const httpOpts = {
+    headers: {
+      'User-Agent': opts.userAgent,
+    },
+  };
+
   // create output folder
   await mkdir(opts.localPath, { recursive: true });
 
@@ -38,18 +44,14 @@ const work = async (opts, root, parse) => {
   const rules = [];
   root.walkAtRules('import', (rule) => rules.push(rule));
 
+  // for each import rule
   await Promise.all(rules.map(async (rule) => {
-    // match google fonts
     const matches = rule.params.match(/^url\(["'](https:\/\/fonts\.googleapis\.com.+?)["']\)$/);
+
+    // skip non-google fonts
     if (!matches) {
       return;
     }
-
-    const httpOpts = {
-      headers: {
-        'User-Agent': opts.userAgent,
-      },
-    };
 
     // download and parse font css
     let fontRoot = await httpGetAsync(matches[1], httpOpts);
