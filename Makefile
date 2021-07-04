@@ -6,8 +6,7 @@ help:
 	@echo ""
 	@echo "available actions:"
 	@echo ""
-	@echo "  test           run tests"
-	@echo "  run            run app"
+	@echo "  test      run tests"
 	@echo ""
 
 define DOCKERFILE
@@ -33,11 +32,3 @@ test:
 
 test-nodocker:
 	yarn test
-
-run:
-	echo "$$DOCKERFILE" | docker build . -f - -t temp
-	docker run --rm -it -v $(PWD):/orig temp sh -c \
-	'make run-nodocker ARGS="$(ARGS)"'
-
-run-nodocker:
-	node cli.js $(ARGS)
