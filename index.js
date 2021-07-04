@@ -20,10 +20,17 @@ const httpGetAsync = async (url, opts) => new Promise((done, reject) => {
     path: ur.pathname + ur.search,
     ...opts,
   }, (res) => {
+    if (res.statusCode !== 200) {
+      reject(new Error(`bad status code: ${res.statusCode.toString()}`));
+      return;
+    }
+
     let cnt = Buffer.alloc(0);
+
     res.on('data', (data) => {
       cnt = Buffer.concat([cnt, data]);
     });
+
     res.on('end', () => done(cnt));
   });
   req.on('error', (err) => reject(err));
@@ -53,8 +60,16 @@ const run = async (opts, root, postcss) => {
       return;
     }
 
-    // download and parse font css
-    let fontRoot = await httpGetAsync(matches[1], httpOpts);
+    // download font css
+    let fontRoot;
+    try {
+      fontRoot = await httpGetAsync(matches[1], httpOpts);
+    } catch (err) {
+      rule.warn(postcss.result, `unable to download font: ${err.toString()}`);
+      return;
+    }
+
+    // parse font css
     fontRoot = postcss.parse(fontRoot.toString());
 
     // gather @font-face/src declarations

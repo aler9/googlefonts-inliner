@@ -22,15 +22,17 @@ test('git version match package version', async () => {
 test('main', async () => {
   mock({});
 
-  const res = await postcss([plugin({
-    localPath: '/testfolder',
-  })]).process(`
+  const cnt = `
 @import url('https://fonts.googleapis.com/css?family=Muli:200,300,400,700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Cutive+Mono&display=swap');
 @import url(https://example.com/othersheet.css);
 body {
   background: blue;
-}`, { from: undefined });
+}`;
+
+  const res = await postcss([plugin({
+    localPath: '/testfolder',
+  })]).process(cnt, { from: undefined });
 
   expect(res.warnings()).toHaveLength(0);
 
@@ -167,4 +169,18 @@ body {
 
   expect(await readFile('/testfolder/7Aulp_0qiz-aVz7u3PJLcUMYOFmQkEk30eifxHiD.woff2')).not.toBe(null);
   expect(await readFile('/testfolder/m8JWjfRfY7WVjVi2E-K9H6RCTm6o39uc.woff2')).not.toBe(null);
+});
+
+test('non existing', async () => {
+  mock({});
+
+  const cnt = `
+@import url('https://fonts.googleapis.com/css?family=Nonexisting:200,300,400,700&display=swap');
+`;
+
+  const res = await postcss([plugin({
+    localPath: '/testfolder',
+  })]).process(cnt, { from: undefined });
+
+  expect(res.warnings()).toHaveLength(1);
 });
