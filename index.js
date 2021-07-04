@@ -30,7 +30,7 @@ const httpGetAsync = async (url, opts) => new Promise((done, reject) => {
   req.end();
 });
 
-const work = async (opts, root, parse) => {
+const run = async (opts, root, postcss) => {
   const httpOpts = {
     headers: {
       'User-Agent': opts.userAgent,
@@ -55,7 +55,7 @@ const work = async (opts, root, parse) => {
 
     // download and parse font css
     let fontRoot = await httpGetAsync(matches[1], httpOpts);
-    fontRoot = parse(fontRoot.toString());
+    fontRoot = postcss.parse(fontRoot.toString());
 
     // gather @font-face/src declarations
     const fdecls = [];
@@ -109,8 +109,8 @@ module.exports = (inOpts = {}) => {
 
   return {
     postcssPlugin: 'googlefonts-inliner',
-    async Once(root, { parse }) {
-      await work(opts, root, parse);
+    async Root(root, postcss) {
+      await run(opts, root, postcss);
     },
   };
 };
