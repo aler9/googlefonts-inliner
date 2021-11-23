@@ -13,7 +13,7 @@ afterEach(async () => {
   mock.restore();
 });
 
-test('git version match package version', async () => {
+test('git version matches package version', async () => {
   const nodeTag = process.env.npm_package_version;
   const gitTag = (await exec('git describe --tags --abbrev=0')).stdout.slice(1, -1);
   expect(gitTag).toEqual(nodeTag);
