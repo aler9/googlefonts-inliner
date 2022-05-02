@@ -57,14 +57,16 @@ Please note that while it is technically possible to embed font files directly i
 yarn add googlefonts-inliner postcss
 ```
 
-## Usage
+## Usage with postcss-cli
 
 There are multiple ways to run PostCSS, the most simple consists in using `postcss-cli`, that can installed with:
+
 ```
 yarn add postcss-cli
 ```
 
 Create a file named `postcss.config.js` with the following content:
+
 ```js
 module.exports = {
   plugins: [
@@ -76,8 +78,47 @@ module.exports = {
 If the `postcss-import` plugin is also in use, put `googlefonts-inliner` after it, not before.
 
 Run PostCSS against the target stylesheet:
+
 ```
 npx postcss style.css -o style_edited.css
+```
+
+## Usage with webpack
+
+Make sure that this entry is present into the `module.rules` array:
+
+```js
+{
+  test: /\.css$/,
+  exclude: /node_modules/,
+  use: [
+    MiniCssExtractPlugin.loader,
+    {
+      loader: 'css-loader',
+      options: { url: true, modules: true },
+    },
+    'postcss-loader',
+  ],
+},
+```
+
+Create a file named `postcss.config.js` with the following content:
+
+```js
+module.exports = {
+  plugins: [
+    require('googlefonts-inliner')({
+      localPath: './',
+      webPath: '~',
+    }),
+  ],
+};
+```
+
+Run webpack:
+
+```
+npx webpack
 ```
 
 ## Options
