@@ -42,7 +42,7 @@ body {
 }
 ```
 
-While the following files are are created:
+While the following files are created:
 
 ```
 googlefonts/7Aulp_0qiz-aVz7u3PJLcUMYOFlOkEk40eifxHiDnzM.woff2
