@@ -20,20 +20,25 @@ const httpGetAsync = async (url, opts) => new Promise((done, reject) => {
     path: ur.pathname + ur.search,
     ...opts,
   }, (res) => {
-    if (res.statusCode !== 200) {
-      reject(new Error(`bad status code: ${res.statusCode.toString()}`));
-      return;
-    }
-
+    let err = null;
     let cnt = Buffer.alloc(0);
 
     res.on('data', (data) => {
       cnt = Buffer.concat([cnt, data]);
     });
 
-    res.on('end', () => done(cnt));
+    res.on('end', () => {
+      if (err != null) {
+        reject(err);
+      } else {
+        done(cnt);
+      }
+    });
+
+    if (res.statusCode !== 200) {
+      err = new Error(`bad status code: ${res.statusCode.toString()}`);
+    }
   });
-  req.on('error', (err) => reject(err));
   req.end();
 });
 
