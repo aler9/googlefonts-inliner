@@ -40,7 +40,7 @@ const httpGetAsync = async (url, opts) => new Promise((done, reject) => {
 const run = async (opts, root, postcss) => {
   const httpOpts = {
     headers: {
-      'Connection': 'keep-alive',
+      Connection: 'keep-alive',
       'User-Agent': opts.userAgent,
     },
   };
