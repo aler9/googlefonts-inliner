@@ -1,5 +1,5 @@
 
-BASE_IMAGE = node:14-alpine3.14
+BASE_IMAGE = node:16-alpine3.16
 
 help:
 	@echo "usage: make [action]"
