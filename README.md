@@ -138,4 +138,5 @@ require('googlefonts-inliner')({
 ## Links
 
 Similar software
-* https://github.com/amio/embedded-google-fonts
+
+* [embedded-google-fonts](https://github.com/amio/embedded-google-fonts)
