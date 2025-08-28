@@ -1,3 +1,6 @@
+# Deprecated
+
+Use [Fontsource](https://fontsource.org/) to host google fonts locally.
 
 # googlefonts-inliner
 
